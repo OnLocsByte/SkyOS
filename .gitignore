@@ -1,0 +1,55 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IntelliJ
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# Logs
+logs/
+*.log
+
+# Fabric
+run/
+remappedSrc/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+hs_err_pid*
+replay_pid*
+
+# Kotlin
+*.kotlin_module
+
+# Generated Assets
+/generated/
+/cache/
+/temp/
+
+# Local Config
+local.properties
+.env
+
+# Loom
+loom-cache/
+.loom-cache/
+
+# Runtime
+crash-reports/
+saves/
+resourcepacks/
+shaderpacks/
