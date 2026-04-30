@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "skyos-core",
+  "version": "${version}",
+  "name": "SkyOS Core",
+  "description": "The core framework for the SkyOS Hypixel SkyBlock ecosystem. Provides rendering, overlays, animations, config, and module management.",
+  "authors": [
+    "SkyOS Team"
+  ],
+  "contact": {
+    "homepage": "https://github.com/onlocsbyte/SkyOS",
+    "sources": "https://github.com/onlocsbyte/SkyOS",
+    "issues": "https://github.com/onlocsbyte/SkyOS/issues"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "assets/skyos-core/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.skyos.core.SkyOSCoreClient"
+    ]
+  },
+  "mixins": [
+    "skyos-core.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": ">=1.21.10",
+    "java": ">=21"
+  },
+  "suggests": {
+    "skyos-storage-overlay": "*",
+    "skyos-hud": "*",
+    "skyos-utilities": "*"
+  }
+}
