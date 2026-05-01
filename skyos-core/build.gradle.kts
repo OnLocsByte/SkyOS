@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom") version "1.9.2"
+    id("fabric-loom") version "1.16.1"
     id("maven-publish")
     java
 }
@@ -25,8 +25,7 @@ dependencies {
     // Fabric API
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
-    // GSON (bundled with Minecraft)
-    compileOnly("com.google.code.gson:gson:2.10.1")
+    // GSON is transitively available via Minecraft's classpath
 }
 
 java {

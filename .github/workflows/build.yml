@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ main, develop, "feature/**", "claude/**" ]
+    branches: [ main, develop, "feature/**", "claude/**", "fix/**" ]
   pull_request:
     branches: [ main, develop ]
 
@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build SkyOS Core
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -21,24 +22,65 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      # Use actions/cache directly instead of gradle/actions/setup-gradle.
+      # The Gradle-specific cache service returns HTTP 400 on this runner
+      # environment, which crashes the setup action and leaves gradle absent
+      # from PATH. actions/cache uses the standard GitHub cache service which
+      # works correctly.
+      - name: Cache Gradle user home
+        uses: actions/cache@v4
         with:
-          gradle-version: '8.10.2'
-          cache-read-only: false
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('skyos-core/**/*.gradle*', 'skyos-core/**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
 
+      # Download Gradle from the official distribution. This is completely
+      # independent of any CI caching service and is always reliable.
+      - name: Install Gradle 8.10.2
+        run: |
+          curl -fsSL \
+            https://services.gradle.org/distributions/gradle-8.10.2-bin.zip \
+            -o /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /opt
+          echo "/opt/gradle-8.10.2/bin" >> $GITHUB_PATH
+
+      - name: Verify Gradle installation
+        run: gradle --version
+
+      # The wrapper JAR is a binary that cannot be committed as text.
+      # Generate all wrapper files (gradlew, gradlew.bat, wrapper JAR) from
+      # the installed Gradle, then use ./gradlew for the actual build so the
+      # Gradle version is pinned by gradle-wrapper.properties.
       - name: Generate Gradle wrapper
         working-directory: skyos-core
-        run: gradle wrapper --gradle-version 8.10
+        run: |
+          gradle wrapper --gradle-version 8.10.2
+          chmod +x gradlew
+
+      - name: Verify wrapper
+        working-directory: skyos-core
+        run: ./gradlew --version
 
       - name: Build SkyOS Core
         working-directory: skyos-core
         run: ./gradlew build --no-daemon --stacktrace
 
-      - name: Upload Artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         if: success()
         with:
           name: skyos-core-${{ github.sha }}
           path: skyos-core/build/libs/*.jar
           retention-days: 14
+
+      - name: Upload failure diagnostics
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-failure-${{ github.sha }}
+          path: skyos-core/build/reports/
+          retention-days: 7
+

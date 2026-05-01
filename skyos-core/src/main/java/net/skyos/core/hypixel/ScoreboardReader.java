@@ -4,8 +4,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardDisplaySlot;
 import net.minecraft.scoreboard.ScoreboardObjective;
+import net.minecraft.scoreboard.ScoreboardScore;
 import net.minecraft.scoreboard.ScoreHolder;
-import net.minecraft.text.Text;
 
 import java.util.*;
 
@@ -28,18 +28,13 @@ public final class ScoreboardReader {
         if (objective == null) return List.of();
 
         List<String> lines = new ArrayList<>();
-        scoreboard.getScoreHolders().stream()
+        scoreboard.getKnownScoreHolders().stream()
                 .filter(holder -> scoreboard.getScore(holder, objective) != null)
                 .sorted(Comparator.comparingInt(holder -> {
-                    var score = scoreboard.getScore(holder, objective);
+                    ScoreboardScore score = scoreboard.getScore(holder, objective);
                     return score != null ? -score.getScore() : 0;
                 }))
-                .forEach(holder -> {
-                    Text display = scoreboard.getPlayerName(holder);
-                    if (display != null) {
-                        lines.add(stripFormatting(display.getString()));
-                    }
-                });
+                .forEach(holder -> lines.add(stripFormatting(holder.getNameForScoreboard())));
         return Collections.unmodifiableList(lines);
     }
 
