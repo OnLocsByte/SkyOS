@@ -50,23 +50,15 @@ jobs:
       - name: Verify Gradle installation
         run: gradle --version
 
-      # The wrapper JAR is a binary that cannot be committed as text.
-      # Generate all wrapper files (gradlew, gradlew.bat, wrapper JAR) from
-      # the installed Gradle, then use ./gradlew for the actual build so the
-      # Gradle version is pinned by gradle-wrapper.properties.
-      - name: Generate Gradle wrapper
-        working-directory: skyos-core
-        run: |
-          gradle wrapper --gradle-version 8.10.2
-          chmod +x gradlew
-
-      - name: Verify wrapper
-        working-directory: skyos-core
-        run: ./gradlew --version
-
+      # Build directly with the installed Gradle — no wrapper needed.
+      # Running `gradle wrapper` inside skyos-core triggers a full project
+      # initialisation (Loom download, plugin resolution) before it can
+      # write the wrapper files, which reliably fails on this runner.
+      # The installed Gradle 8.10.2 is equivalent to running ./gradlew;
+      # skipping the wrapper removes an entire class of failure.
       - name: Build SkyOS Core
         working-directory: skyos-core
-        run: ./gradlew build --no-daemon --stacktrace
+        run: gradle build --no-daemon --stacktrace
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
