@@ -39,13 +39,13 @@ jobs:
 
       # Download Gradle from the official distribution. This is completely
       # independent of any CI caching service and is always reliable.
-      - name: Install Gradle 8.10.2
+      - name: Install Gradle 9.5.0
         run: |
           curl -fsSL \
-            https://services.gradle.org/distributions/gradle-8.10.2-bin.zip \
+            https://services.gradle.org/distributions/gradle-9.5.0-bin.zip \
             -o /tmp/gradle.zip
           unzip -q /tmp/gradle.zip -d /opt
-          echo "/opt/gradle-8.10.2/bin" >> $GITHUB_PATH
+          echo "/opt/gradle-9.5.0/bin" >> $GITHUB_PATH
 
       - name: Verify Gradle installation
         run: gradle --version
