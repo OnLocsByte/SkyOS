@@ -25,11 +25,9 @@ public final class PlayerState {
 
     public void update(MinecraftClient client) {
         if (client.player == null) return;
-        // Health and absorption from vanilla (base stats)
+        // Health from vanilla (base stats); SkyBlock-specific stats parsed from action bar
         this.health = (int) client.player.getHealth();
         this.maxHealth = (int) client.player.getMaxHealth();
-        this.speed = client.player.getSpeed();
-        // SkyBlock-specific stats are parsed from the action bar
     }
 
     public void parseFromActionBar(String actionBar) {

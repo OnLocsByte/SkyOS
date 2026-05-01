@@ -66,7 +66,7 @@ public class SkyOSCoreClient implements ClientModInitializer {
         });
 
         HudRenderCallback.EVENT.register((drawContext, tickDeltaManager) -> {
-            float tickDelta = tickDeltaManager.getTickDelta(true);
+            float tickDelta = tickDeltaManager.getTickProgress(true);
             if (hypixelDetector.isOnSkyBlock()) {
                 overlayManager.render(drawContext, tickDelta);
                 notificationManager.render(drawContext, tickDelta);

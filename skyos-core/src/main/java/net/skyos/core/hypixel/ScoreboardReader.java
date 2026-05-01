@@ -4,7 +4,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardDisplaySlot;
 import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.scoreboard.ScoreboardScore;
 import net.minecraft.scoreboard.ScoreHolder;
 
 import java.util.*;
@@ -31,7 +30,7 @@ public final class ScoreboardReader {
         scoreboard.getKnownScoreHolders().stream()
                 .filter(holder -> scoreboard.getScore(holder, objective) != null)
                 .sorted(Comparator.comparingInt(holder -> {
-                    ScoreboardScore score = scoreboard.getScore(holder, objective);
+                    var score = scoreboard.getScore(holder, objective);
                     return score != null ? -score.getScore() : 0;
                 }))
                 .forEach(holder -> lines.add(stripFormatting(holder.getNameForScoreboard())));

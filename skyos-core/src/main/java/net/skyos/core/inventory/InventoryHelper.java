@@ -49,9 +49,9 @@ public final class InventoryHelper {
         if (customData == null) return Optional.empty();
         NbtCompound nbt = customData.copyNbt();
         if (!nbt.contains("ExtraAttributes")) return Optional.empty();
-        NbtCompound ea = nbt.getCompound("ExtraAttributes");
+        NbtCompound ea = nbt.getCompoundOrEmpty("ExtraAttributes");
         if (!ea.contains("id")) return Optional.empty();
-        return Optional.of(ea.getString("id"));
+        return ea.getString("id");
     }
 
     // MC 1.20.5+: skull owner data moved to DataComponentTypes.PROFILE.
@@ -59,7 +59,7 @@ public final class InventoryHelper {
         if (stack.isEmpty()) return Optional.empty();
         ProfileComponent profile = stack.get(DataComponentTypes.PROFILE);
         if (profile == null) return Optional.empty();
-        var textures = profile.properties().get("textures");
+        var textures = profile.getGameProfile().properties().get("textures");
         if (textures.isEmpty()) return Optional.empty();
         return Optional.of(textures.iterator().next().value());
     }
