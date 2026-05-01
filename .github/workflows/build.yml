@@ -58,7 +58,7 @@ jobs:
       # skipping the wrapper removes an entire class of failure.
       - name: Build SkyOS Core
         working-directory: skyos-core
-        run: gradle build --no-daemon --stacktrace
+        run: gradle build --no-daemon --stacktrace --info 2>&1
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
