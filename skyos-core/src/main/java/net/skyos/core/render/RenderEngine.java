@@ -1,13 +1,9 @@
 package net.skyos.core.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.*;
-import net.minecraft.client.util.math.MatrixStack;
 import net.skyos.core.render.animation.AnimationEngine;
 import net.skyos.core.render.theme.SkyOSPalette;
-import org.joml.Matrix4f;
 
 /**
  * SkyOS primary render engine.
@@ -35,27 +31,14 @@ public final class RenderEngine {
         ctx.fillGradient(x, y, x + w, y + h, topColor, bottomColor);
     }
 
+    // Horizontal gradient via 1-pixel column fills — avoids Blaze3D buffer
+    // building APIs that change between Minecraft versions.
     public void fillGradientH(DrawContext ctx, int x, int y, int w, int h, int leftColor, int rightColor) {
-        MatrixStack matrices = ctx.getMatrices();
-        matrices.push();
-        Matrix4f matrix = matrices.peek().getPositionMatrix();
-
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorProgram);
-
-        BufferBuilder buf = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
-        int r1 = (leftColor >> 16) & 0xFF, g1 = (leftColor >> 8) & 0xFF, b1 = leftColor & 0xFF, a1 = (leftColor >> 24) & 0xFF;
-        int r2 = (rightColor >> 16) & 0xFF, g2 = (rightColor >> 8) & 0xFF, b2 = rightColor & 0xFF, a2 = (rightColor >> 24) & 0xFF;
-
-        buf.vertex(matrix, x,     y,     0).color(r1, g1, b1, a1);
-        buf.vertex(matrix, x,     y + h, 0).color(r1, g1, b1, a1);
-        buf.vertex(matrix, x + w, y + h, 0).color(r2, g2, b2, a2);
-        buf.vertex(matrix, x + w, y,     0).color(r2, g2, b2, a2);
-
-        BufferRenderer.drawWithGlobalProgram(buf.end());
-        RenderSystem.disableBlend();
-        matrices.pop();
+        if (w <= 0) return;
+        for (int i = 0; i < w; i++) {
+            float t = w > 1 ? (float) i / (w - 1) : 0f;
+            ctx.fill(x + i, y, x + i + 1, y + h, SkyOSPalette.lerp(leftColor, rightColor, t));
+        }
     }
 
     // ─── Rounded Rectangles ──────────────────────────────────────────────────

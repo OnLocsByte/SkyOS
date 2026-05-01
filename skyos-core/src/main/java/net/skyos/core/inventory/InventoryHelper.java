@@ -1,9 +1,12 @@
 package net.skyos.core.inventory;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LoreComponent;
+import net.minecraft.component.type.NbtComponent;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
@@ -19,8 +22,7 @@ public final class InventoryHelper {
         if (client.player == null) return Optional.empty();
         ScreenHandler handler = client.player.currentScreenHandler;
         if (slotIndex < 0 || slotIndex >= handler.slots.size()) return Optional.empty();
-        Slot slot = handler.slots.get(slotIndex);
-        ItemStack stack = slot.getStack();
+        ItemStack stack = handler.slots.get(slotIndex).getStack();
         return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
     }
 
@@ -39,43 +41,35 @@ public final class InventoryHelper {
         return stack.getName().getString();
     }
 
+    // MC 1.20.5+: ItemStack.getNbt() was removed. Custom NBT is now stored
+    // in the CUSTOM_DATA DataComponent (ExtraAttributes for SkyBlock items).
     public static Optional<String> getSkyBlockItemId(ItemStack stack) {
         if (stack.isEmpty()) return Optional.empty();
-        NbtCompound nbt = stack.getNbt();
-        if (nbt == null) return Optional.empty();
-        NbtCompound extraAttributes = nbt.getCompound("ExtraAttributes");
-        if (extraAttributes == null || !extraAttributes.contains("id")) return Optional.empty();
-        return Optional.of(extraAttributes.getString("id"));
+        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
+        if (customData == null) return Optional.empty();
+        NbtCompound nbt = customData.copyNbt();
+        if (!nbt.contains("ExtraAttributes")) return Optional.empty();
+        NbtCompound ea = nbt.getCompoundOrEmpty("ExtraAttributes");
+        if (!ea.contains("id")) return Optional.empty();
+        return ea.getString("id");
     }
 
+    // MC 1.20.5+: skull owner data moved to DataComponentTypes.PROFILE.
     public static Optional<String> getSkullTextureUrl(ItemStack stack) {
         if (stack.isEmpty()) return Optional.empty();
-        NbtCompound nbt = stack.getNbt();
-        if (nbt == null) return Optional.empty();
-        try {
-            NbtCompound skullOwner = nbt.getCompound("SkullOwner");
-            NbtCompound properties = skullOwner.getCompound("Properties");
-            NbtList textures = properties.getList("textures", 10);
-            if (textures.isEmpty()) return Optional.empty();
-            NbtCompound texture = textures.getCompound(0);
-            return Optional.of(texture.getString("Value"));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+        ProfileComponent profile = stack.get(DataComponentTypes.PROFILE);
+        if (profile == null) return Optional.empty();
+        var textures = profile.getGameProfile().properties().get("textures");
+        if (textures.isEmpty()) return Optional.empty();
+        return Optional.of(textures.iterator().next().value());
     }
 
+    // MC 1.20.5+: lore moved to DataComponentTypes.LORE.
     public static List<Text> getLore(ItemStack stack) {
         if (stack.isEmpty()) return List.of();
-        NbtCompound nbt = stack.getNbt();
-        if (nbt == null) return List.of();
-        NbtCompound display = nbt.getCompound("display");
-        if (!display.contains("Lore")) return List.of();
-        NbtList loreNbt = display.getList("Lore", 8);
-        List<Text> lore = new ArrayList<>();
-        for (int i = 0; i < loreNbt.size(); i++) {
-            lore.add(Text.Serialization.fromJson(loreNbt.getString(i), MinecraftClient.getInstance().world.getRegistryManager()));
-        }
-        return Collections.unmodifiableList(lore);
+        LoreComponent loreComp = stack.get(DataComponentTypes.LORE);
+        if (loreComp == null) return List.of();
+        return Collections.unmodifiableList(loreComp.lines());
     }
 
     public static boolean isChestName(String name, String... patterns) {

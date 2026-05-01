@@ -51,11 +51,13 @@ public final class OverlayManager {
 
         for (Overlay overlay : sorted) {
             try {
-                ctx.getMatrices().push();
+                ctx.getMatrices().pushMatrix();
                 int[] resolved = resolvePosition(overlay, sw, sh);
-                ctx.getMatrices().translate(resolved[0] - overlay.getX(), resolved[1] - overlay.getY(), 0);
+                ctx.getMatrices().translate(
+                        (float) (resolved[0] - overlay.getX()),
+                        (float) (resolved[1] - overlay.getY()));
                 overlay.render(ctx, tickDelta);
-                ctx.getMatrices().pop();
+                ctx.getMatrices().popMatrix();
             } catch (Exception e) {
                 SkyOSCoreClient.LOGGER.error("Error rendering overlay '{}'", overlay.getId(), e);
             }
