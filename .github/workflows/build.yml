@@ -24,12 +24,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '8.10.2'
+          gradle-version: wrapper
           cache-read-only: false
 
-      - name: Generate Gradle wrapper
-        working-directory: skyos-core
-        run: gradle wrapper --gradle-version 8.10
+      - name: Make gradlew executable
+        run: chmod +x skyos-core/gradlew
 
       - name: Build SkyOS Core
         working-directory: skyos-core
