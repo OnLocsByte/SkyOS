@@ -1,0 +1,18 @@
+{
+    "skyos.title": "SkyOS",
+    "skyos.category.general": "General",
+    "skyos.category.gui": "GUI",
+    "skyos.category.visuals": "Visuals",
+    "skyos.category.main": "Main",
+    "skyos.category.chat": "Chat",
+    "skyos.category.misc": "Misc",
+    "skyos.category.dev": "Dev",
+    "skyos.option.autoUpdater": "Auto Updater",
+    "skyos.option.autoUpdater.desc": "Check for mod updates on startup",
+    "skyos.option.modHider": "Mod Hider",
+    "skyos.option.modHider.desc": "Hide mod channel registrations from servers",
+    "skyos.option.firmamentRemover": "Firmament Announcer Remover",
+    "skyos.option.firmamentRemover.desc": "Remove Firmament announcement messages from chat",
+    "skyos.option.debugMode": "Debug Mode",
+    "skyos.option.debugMode.desc": "Show debug information in-game"
+}
