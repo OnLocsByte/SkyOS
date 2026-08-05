@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "aetherion",
+    "version": "${version}",
+    "name": "Aetherion",
+    "description": "Clientseitige QoL- und Informations-Overlays für Hypixel Skyblock.",
+    "authors": ["Freelocs"],
+    "contact": {
+        "sources": "https://github.com/freelocs-dev/SkyOS"
+    },
+    "license": "MIT",
+    "icon": "assets/aetherion/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            {
+                "value": "dev.freelocs.aetherion.AetherionMod",
+                "adapter": "kotlin"
+            }
+        ],
+        "modmenu": [
+            "dev.freelocs.aetherion.modmenu.AetherionModMenuIntegration"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.19.0",
+        "minecraft": "~1.21.1",
+        "java": ">=21",
+        "fabric-api": "*",
+        "fabric-language-kotlin": ">=1.10.0+kotlin.1.9.0"
+    },
+    "suggests": {
+        "modmenu": "*"
+    }
+}
