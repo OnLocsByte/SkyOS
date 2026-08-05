@@ -1,0 +1,18 @@
+{
+    "aetherion.title": "Aetherion",
+    "aetherion.category.dungeons": "Dungeons",
+    "aetherion.category.skills": "Skills",
+    "aetherion.category.tooltips": "Tooltips",
+    "aetherion.category.slayer": "Slayer",
+    "aetherion.category.bestflip": "Best Flip",
+    "aetherion.option.dungeonTimer": "Dungeon Timer",
+    "aetherion.option.dungeonTimer.desc": "Show total elapsed time and per-phase splits during dungeon runs",
+    "aetherion.option.skillProgress": "Skill XP Progress",
+    "aetherion.option.skillProgress.desc": "Show per-action skill XP gains and progress to next level",
+    "aetherion.option.rarityTooltip": "Rarity Tooltip Frame",
+    "aetherion.option.rarityTooltip.desc": "Add a rarity-colored divider to Skyblock item tooltips",
+    "aetherion.option.slayerHp": "Slayer Boss HP Bar",
+    "aetherion.option.slayerHp.desc": "Show slayer boss health as a bar instead of action bar text",
+    "aetherion.option.bestFlip": "Best Flip Checker",
+    "aetherion.option.bestFlip.desc": "Show the best current bazaar/auction house flips (display only)"
+}
