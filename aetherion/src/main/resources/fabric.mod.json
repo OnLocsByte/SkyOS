@@ -1,0 +1,29 @@
+{
+    "schemaVersion": 1,
+    "id": "aetherion",
+    "version": "${version}",
+    "name": "Aetherion",
+    "description": "Client-side information and quality-of-life overlays for Hypixel Skyblock.",
+    "authors": ["Freelocs"],
+    "contact": {
+        "sources": "https://github.com/freelocs-dev/SkyOS"
+    },
+    "license": "MIT",
+    "icon": "assets/aetherion/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            {
+                "value": "dev.freelocs.aetherion.AetherionMod",
+                "adapter": "kotlin"
+            }
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.16.0",
+        "minecraft": "~1.21.1",
+        "java": ">=21",
+        "fabric-api": "*",
+        "fabric-language-kotlin": "*"
+    }
+}
