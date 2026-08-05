@@ -1,0 +1,36 @@
+{
+    "schemaVersion": 1,
+    "id": "aetherion",
+    "version": "${version}",
+    "name": "Aetherion",
+    "description": "Client-side QoL overlays for Hypixel Skyblock: dungeon timer, skill XP progress, a slayer boss HP bar, rarity-aware item tooltips, draggable HUD elements and a display-only Bazaar/AH price checker.",
+    "authors": ["Freelocs"],
+    "contact": {
+        "sources": "https://github.com/freelocs-dev/skyos"
+    },
+    "license": "MIT",
+    "icon": "assets/aetherion/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            {
+                "value": "dev.freelocs.aetherion.AetherionMod",
+                "adapter": "kotlin"
+            }
+        ],
+        "modmenu": [
+            "dev.freelocs.aetherion.modmenu.AetherionModMenuIntegration"
+        ]
+    },
+    "mixins": ["aetherion.mixins.json"],
+    "depends": {
+        "fabricloader": ">=0.19.0",
+        "minecraft": "~1.21.1",
+        "java": ">=21",
+        "fabric-api": "*",
+        "fabric-language-kotlin": ">=1.13.0+kotlin.2.1.0"
+    },
+    "suggests": {
+        "modmenu": "*"
+    }
+}
