@@ -1,0 +1,19 @@
+{
+    "aetherion.title": "Aetherion",
+    "aetherion.category.dungeons": "Dungeons",
+    "aetherion.category.skills": "Skills",
+    "aetherion.category.items": "Items",
+    "aetherion.category.slayer": "Slayer",
+    "aetherion.category.economy": "Economy",
+    "aetherion.category.hud": "HUD & Overlays",
+    "aetherion.feature.dungeonTimer": "Dungeon Timer",
+    "aetherion.feature.dungeonTimer.desc": "Floating run timer with per-boss phase splits",
+    "aetherion.feature.skillXpOverlay": "Skill XP Overlay",
+    "aetherion.feature.skillXpOverlay.desc": "Tracks XP gained per action and shows a rate overlay",
+    "aetherion.feature.itemRarityTooltip": "Item Rarity Tooltips",
+    "aetherion.feature.itemRarityTooltip.desc": "Highlights a Skyblock item's rarity in its tooltip",
+    "aetherion.feature.slayerHealthBar": "Slayer Boss Health Bar",
+    "aetherion.feature.slayerHealthBar.desc": "Shows the nearest slayer boss's health as a bar overlay",
+    "aetherion.feature.bestFlip": "Best Flip Price Checker",
+    "aetherion.feature.bestFlip.desc": "Highlights bazaar products with a large buy/sell spread"
+}
