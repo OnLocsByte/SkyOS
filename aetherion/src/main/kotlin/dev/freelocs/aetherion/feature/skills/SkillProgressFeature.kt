@@ -21,6 +21,7 @@ object SkillProgressFeature : Feature, HudElement {
 
     override val id = "skill_progress"
     override val displayName = "Skill Progress"
+    override val label = displayName
 
     private val SKILL_NAMES = listOf(
         "Farming", "Mining", "Combat", "Foraging", "Fishing",

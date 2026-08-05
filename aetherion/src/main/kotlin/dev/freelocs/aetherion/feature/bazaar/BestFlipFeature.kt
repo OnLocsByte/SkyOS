@@ -19,6 +19,7 @@ object BestFlipFeature : Feature, HudElement {
 
     override val id = "best_flip"
     override val displayName = "Best Flip"
+    override val label = displayName
 
     private val executor = Executors.newSingleThreadExecutor { r -> Thread(r, "Aetherion-BestFlip").apply { isDaemon = true } }
     private val refreshing = AtomicBoolean(false)

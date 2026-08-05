@@ -20,6 +20,7 @@ object SlayerHealthBarFeature : Feature, HudElement {
 
     override val id = "slayer_health_bar"
     override val displayName = "Slayer HP Bar"
+    override val label = displayName
 
     private val HP_PATTERN = Regex("""(?:Slayer Boss|Boss)[^\d]*?([\d,]+) */ *([\d,]+)""", RegexOption.IGNORE_CASE)
 

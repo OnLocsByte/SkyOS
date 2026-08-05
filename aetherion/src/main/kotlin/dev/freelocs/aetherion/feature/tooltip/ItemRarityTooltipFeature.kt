@@ -2,7 +2,7 @@ package dev.freelocs.aetherion.feature.tooltip
 
 import dev.freelocs.aetherion.config.ConfigManager
 import dev.freelocs.aetherion.feature.Feature
-import net.fabricmc.fabric.api.client.rendering.v1.ItemTooltipCallback
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.minecraft.network.chat.Component
 
 /**

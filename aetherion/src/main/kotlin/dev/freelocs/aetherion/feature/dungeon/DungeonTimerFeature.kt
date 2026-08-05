@@ -5,7 +5,7 @@ import dev.freelocs.aetherion.config.HudPosition
 import dev.freelocs.aetherion.feature.Feature
 import dev.freelocs.aetherion.feature.hud.HudElement
 import dev.freelocs.aetherion.feature.hud.HudManager
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientPlayConnectionEvents
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -22,6 +22,7 @@ object DungeonTimerFeature : Feature, HudElement {
 
     override val id = "dungeon_timer"
     override val displayName = "Dungeon Timer"
+    override val label = displayName
 
     private val START_TRIGGERS = listOf(
         Regex("""The dungeon timer has started!?""", RegexOption.IGNORE_CASE)

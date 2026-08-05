@@ -4,6 +4,7 @@ out/
 
 # Gradle
 .gradle/
+.kotlin/
 local.properties
 gradle.properties.local
 
